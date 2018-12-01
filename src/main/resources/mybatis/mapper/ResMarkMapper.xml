@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.login.mapper.ResMarkMapper">
+  <resultMap id="BaseResultMap" type="com.example.login.bean.ResMark">
+    <id column="mark_id" jdbcType="INTEGER" property="markId" />
+    <result column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="mark_title" jdbcType="VARCHAR" property="markTitle" />
+    <result column="r_md5" jdbcType="VARCHAR" property="rMd5" />
+    <result column="r_status" jdbcType="CHAR" property="rStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    mark_id, u_id, mark_title, r_md5, r_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from res_mark
+    where mark_id = #{markId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from res_mark
+    where mark_id = #{markId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.login.bean.ResMark">
+    insert into res_mark (mark_id, u_id, mark_title, 
+      r_md5, r_status)
+    values (#{markId,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER}, #{markTitle,jdbcType=VARCHAR}, 
+      #{rMd5,jdbcType=VARCHAR}, #{rStatus,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.login.bean.ResMark">
+    insert into res_mark
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="markId != null">
+        mark_id,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="markTitle != null">
+        mark_title,
+      </if>
+      <if test="rMd5 != null">
+        r_md5,
+      </if>
+      <if test="rStatus != null">
+        r_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="markId != null">
+        #{markId,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="markTitle != null">
+        #{markTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="rMd5 != null">
+        #{rMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="rStatus != null">
+        #{rStatus,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.login.bean.ResMark">
+    update res_mark
+    <set>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="markTitle != null">
+        mark_title = #{markTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="rMd5 != null">
+        r_md5 = #{rMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="rStatus != null">
+        r_status = #{rStatus,jdbcType=CHAR},
+      </if>
+    </set>
+    where mark_id = #{markId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.login.bean.ResMark">
+    update res_mark
+    set u_id = #{uId,jdbcType=INTEGER},
+      mark_title = #{markTitle,jdbcType=VARCHAR},
+      r_md5 = #{rMd5,jdbcType=VARCHAR},
+      r_status = #{rStatus,jdbcType=CHAR}
+    where mark_id = #{markId,jdbcType=INTEGER}
+  </update>
+</mapper>

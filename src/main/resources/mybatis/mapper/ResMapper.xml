@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.login.mapper.ResMapper">
+  <resultMap id="BaseResultMap" type="com.example.login.bean.Res">
+    <id column="r_id" jdbcType="INTEGER" property="rId" />
+    <result column="r_md5" jdbcType="VARCHAR" property="rMd5" />
+    <result column="r_path" jdbcType="VARCHAR" property="rPath" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    r_id, r_md5, r_path
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from res
+    where r_id = #{rId,jdbcType=INTEGER}
+  </select>
+  <!--根据md5查询记录-->
+  <select id="selectByMD5" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from res
+    where r_md5 = #{rMD5,jdbcType=VARCHAR}
+    limit 1;
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from res
+    where r_id = #{rId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.login.bean.Res">
+    insert into res (r_id, r_md5, r_path
+      )
+    values (#{rId,jdbcType=INTEGER}, #{rMd5,jdbcType=VARCHAR}, #{rPath,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.login.bean.Res">
+    insert into res
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        r_id,
+      </if>
+      <if test="rMd5 != null">
+        r_md5,
+      </if>
+      <if test="rPath != null">
+        r_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        #{rId,jdbcType=INTEGER},
+      </if>
+      <if test="rMd5 != null">
+        #{rMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="rPath != null">
+        #{rPath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.login.bean.Res">
+    update res
+    <set>
+      <if test="rMd5 != null">
+        r_md5 = #{rMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="rPath != null">
+        r_path = #{rPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.login.bean.Res">
+    update res
+    set r_md5 = #{rMd5,jdbcType=VARCHAR},
+      r_path = #{rPath,jdbcType=VARCHAR}
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+</mapper>

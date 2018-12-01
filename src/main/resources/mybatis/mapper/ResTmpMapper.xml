@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.login.mapper.ResTmpMapper">
+  <resultMap id="BaseResultMap" type="com.example.login.bean.ResTmp">
+    <id column="tmp_id" jdbcType="INTEGER" property="tmpId" />
+    <result column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="tmp_title" jdbcType="VARCHAR" property="tmpTitle" />
+    <result column="tmp_md5" jdbcType="VARCHAR" property="tmpMd5" />
+    <result column="tmp_path" jdbcType="VARCHAR" property="tmpPath" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tmp_id, u_id, tmp_title, tmp_md5, tmp_path
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from res_tmp
+    where tmp_id = #{tmpId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from res_tmp
+    where tmp_id = #{tmpId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByMD5">
+    delete from res_tmp
+    where tmp_title = #{tmpTitle,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.login.bean.ResTmp">
+    insert into res_tmp (tmp_id, u_id, tmp_title,
+      tmp_md5, tmp_path)
+    values (#{tmpId,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER}, #{tmpTitle,jdbcType=VARCHAR}, 
+      #{tmpMd5,jdbcType=VARCHAR}, #{tmpPath,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.login.bean.ResTmp">
+    insert into res_tmp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tmpId != null">
+        tmp_id,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="tmpTitle != null">
+        tmp_title,
+      </if>
+      <if test="tmpMd5 != null">
+        tmp_md5,
+      </if>
+      <if test="tmpPath != null">
+        tmp_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tmpId != null">
+        #{tmpId,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="tmpTitle != null">
+        #{tmpTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="tmpMd5 != null">
+        #{tmpMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="tmpPath != null">
+        #{tmpPath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.login.bean.ResTmp">
+    update res_tmp
+    <set>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="tmpTitle != null">
+        tmp_title = #{tmpTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="tmpMd5 != null">
+        tmp_md5 = #{tmpMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="tmpPath != null">
+        tmp_path = #{tmpPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tmp_id = #{tmpId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.login.bean.ResTmp">
+    update res_tmp
+    set u_id = #{uId,jdbcType=INTEGER},
+      tmp_title = #{tmpTitle,jdbcType=VARCHAR},
+      tmp_md5 = #{tmpMd5,jdbcType=VARCHAR},
+      tmp_path = #{tmpPath,jdbcType=VARCHAR}
+    where tmp_id = #{tmpId,jdbcType=INTEGER}
+  </update>
+</mapper>
